@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 
 export default function UserForm({ addUser }) {
+  const [message, setMessage] = useState('');
   const [formData, setFormData] = useState({
     name: "",
     surname: "",
@@ -17,9 +18,12 @@ export default function UserForm({ addUser }) {
     event.preventDefault();
     addUser(formData);
     setSubmitting(true);
+    let age = new Date().getFullYear()-formData.birthday.substr(0,4)
+    setMessage(`Hello ${formData.name} ${formData.surname} from ${formData.countries}. On ${formData.birthday.substr(8,2)} of ${formData.birthday.substr(5,2)} you will have ${age} years`);
+    //setFooter(`${formData.name} ${formData.surname} `)
     setTimeout(() => {
       setSubmitting(false);
-    }, 3000);
+    }, 10000);
     setFormData({ name: "", surname: "", countries: "", birthday: "" });
   };
 
@@ -35,6 +39,8 @@ export default function UserForm({ addUser }) {
     getData();
   });
 
+
+  
   return (
     <div className="form-container">
       <form onSubmit={handleSubmit}>
@@ -48,6 +54,7 @@ export default function UserForm({ addUser }) {
                 placeholder="Name"
                 value={formData.name}
                 onChange={handleChange}
+                required
               />
             </label>
           </p>
@@ -62,6 +69,7 @@ export default function UserForm({ addUser }) {
                 placeholder="Surname"
                 value={formData.surname}
                 onChange={handleChange}
+                required
               />
             </label>
           </p>
@@ -74,10 +82,11 @@ export default function UserForm({ addUser }) {
                 name="countries"
                 onChange={handleChange}
                 value={formData.country}
+                required
               >
                 <option value="">--Please select a country--</option>
                 {countries.map(({ name }) => (
-                  <option value={name.common}>{name.common}</option>
+                  <option key={name.common} value={name.common}>{name.common}</option>
                 ))}
               </select>
             </label>
@@ -91,20 +100,17 @@ export default function UserForm({ addUser }) {
                 type="date"
                 name="birthday"
                 placeholder="Birthday"
-                value={formData.birthday}
+                // value={formData.birthday}
+                 value={formData.birthday}
                 onChange={handleChange}
               />
             </label>
           </p>
         </div>
         <div>
-          <button>Save</button>
+          <button type="submit">Save</button>
         </div>
-        {submitting && (
-          <div>
-            Hello {formData.name} {formData.surname} from {formData.countries}
-          </div>
-        )}
+        {submitting && <p>{message}</p>}
       </form>
     </div>
   );
