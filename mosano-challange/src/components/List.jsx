@@ -4,12 +4,10 @@ export default function List({ users, currentUserName, currentUserSurname }) {
   const [message, setMessage] = useState("");
 
   const Trigger = (user) => {
-    // info it's user obj
     setShowMessage(true);
     let age = new Date().getFullYear() - user.birthday.substr(0, 4);
     let day = user.birthday.substr(8, 2);
     let month = user.birthday.substr(5, 2);
-
     setMessage(
       `Hello ${user.name} ${user.surname} from ${user.countries}. On ${day} of ${month} you will have ${age} years`
     );
@@ -18,7 +16,7 @@ export default function List({ users, currentUserName, currentUserSurname }) {
     }, 5000);
   };
   return (
-    <div>
+    <div id="table-container">
       {showMessage && <p id="message">{message}</p>}
       <table>
         <tbody>
@@ -42,10 +40,10 @@ export default function List({ users, currentUserName, currentUserSurname }) {
             </tr>
           ))}
         </tbody>
+        <div id="user-name">
+          {currentUserName} {currentUserSurname}
+        </div>
       </table>
-      <div id="user-name">
-        {currentUserName} {currentUserSurname}
-      </div>
     </div>
   );
 }
