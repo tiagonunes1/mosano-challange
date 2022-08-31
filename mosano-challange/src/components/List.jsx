@@ -1,4 +1,6 @@
 import { useState } from "react";
+import Message from "./Message";
+
 export default function List({ users, currentUserName, currentUserSurname }) {
   const [showMessage, setShowMessage] = useState(false);
   const [message, setMessage] = useState("");
@@ -13,11 +15,11 @@ export default function List({ users, currentUserName, currentUserSurname }) {
     );
     setTimeout(() => {
       setShowMessage(false);
-    }, 5000);
+    }, 2000);
   };
   return (
     <div id="table-container">
-      {showMessage && <p id="message">{message}</p>}
+      {showMessage && <Message message={message} />}
       <table>
         <tbody>
           <tr>
@@ -40,10 +42,12 @@ export default function List({ users, currentUserName, currentUserSurname }) {
             </tr>
           ))}
         </tbody>
-        <div id="user-name">
-          {currentUserName} {currentUserSurname}
-        </div>
       </table>
+      <div id="user-name">
+        <strong>
+          {currentUserName} {currentUserSurname}
+        </strong>
+      </div>
     </div>
   );
 }

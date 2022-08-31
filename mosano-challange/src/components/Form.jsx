@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import Message from "./Message";
 
 export default function UserForm({ addUser }) {
   const [message, setMessage] = useState("");
@@ -22,13 +23,12 @@ export default function UserForm({ addUser }) {
     let age = new Date().getFullYear() - formData.birthday.substr(0, 4);
     let day = formData.birthday.substr(8, 2);
     let month = formData.birthday.substr(5, 2);
-
     setMessage(
       `Hello ${formData.name} ${formData.surname} from ${formData.countries}. On ${day} of ${month} you will have ${age} years`
     );
     setTimeout(() => {
       setSubmitting(false);
-    }, 10000);
+    }, 2000);
     setFormData({ name: "", surname: "", countries: "", birthday: "" });
   };
 
@@ -39,6 +39,7 @@ export default function UserForm({ addUser }) {
       let data = await fetch(`https://restcountries.com/v3.1/all`).then(
         (response) => response.json()
       );
+      console.log(data.sort())
       setCountries(data);
     };
     getData();
@@ -111,11 +112,13 @@ export default function UserForm({ addUser }) {
             </label>
           </p>
         </div>
-        <div>
-          <button type="submit">Save</button>
+        <div className="submit">
+          <button className="btn btn-primary" type="submit">
+            Save
+          </button>
         </div>
-        {submitting && <p id="message">{message}</p>}
       </form>
+      {submitting && <Message message={message} />}
     </div>
   );
 }
