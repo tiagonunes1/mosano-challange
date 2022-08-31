@@ -14,6 +14,7 @@ export default function UserForm({ addUser }) {
   };
 
   const [submitting, setSubmitting] = useState(false);
+
   const handleSubmit = (event) => {
     event.preventDefault();
     addUser(formData);
@@ -113,7 +114,7 @@ export default function UserForm({ addUser }) {
         <div>
           <button type="submit">Save</button>
         </div>
-        {submitting && <p>{message}</p>}
+        {submitting && <p id="message">{message}</p>}
       </form>
     </div>
   );

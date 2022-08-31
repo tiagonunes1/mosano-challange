@@ -8,7 +8,6 @@ function App() {
   const [currentUserName, setCurrentUserName] = useState("");
   const [currentUserSurname, setCurrentUserSurname] = useState("");
   const addUser = (user) => {
-    //console.log(user);
     setCurrentUserName(user.name);
     setCurrentUserSurname(user.surname);
     updateUsers([...users, user]);
