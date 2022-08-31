@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 
 export default function UserForm({ addUser }) {
-  const [message, setMessage] = useState('');
+  const [message, setMessage] = useState("");
   const [formData, setFormData] = useState({
     name: "",
     surname: "",
@@ -18,9 +18,13 @@ export default function UserForm({ addUser }) {
     event.preventDefault();
     addUser(formData);
     setSubmitting(true);
-    let age = new Date().getFullYear()-formData.birthday.substr(0,4)
-    setMessage(`Hello ${formData.name} ${formData.surname} from ${formData.countries}. On ${formData.birthday.substr(8,2)} of ${formData.birthday.substr(5,2)} you will have ${age} years`);
-    //setFooter(`${formData.name} ${formData.surname} `)
+    let age = new Date().getFullYear() - formData.birthday.substr(0, 4);
+    let day = formData.birthday.substr(8, 2);
+    let month = formData.birthday.substr(5, 2);
+
+    setMessage(
+      `Hello ${formData.name} ${formData.surname} from ${formData.countries}. On ${day} of ${month} you will have ${age} years`
+    );
     setTimeout(() => {
       setSubmitting(false);
     }, 10000);
@@ -39,8 +43,6 @@ export default function UserForm({ addUser }) {
     getData();
   });
 
-
-  
   return (
     <div className="form-container">
       <form onSubmit={handleSubmit}>
@@ -86,7 +88,9 @@ export default function UserForm({ addUser }) {
               >
                 <option value="">--Please select a country--</option>
                 {countries.map(({ name }) => (
-                  <option key={name.common} value={name.common}>{name.common}</option>
+                  <option key={name.common} value={name.common}>
+                    {name.common}
+                  </option>
                 ))}
               </select>
             </label>
@@ -100,8 +104,7 @@ export default function UserForm({ addUser }) {
                 type="date"
                 name="birthday"
                 placeholder="Birthday"
-                // value={formData.birthday}
-                 value={formData.birthday}
+                value={formData.birthday}
                 onChange={handleChange}
               />
             </label>

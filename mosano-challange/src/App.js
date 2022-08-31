@@ -5,13 +5,22 @@ import List from "./components/List";
 
 function App() {
   const [users, updateUsers] = useState([]);
+  const [currentUserName, setCurrentUserName] = useState("");
+  const [currentUserSurname, setCurrentUserSurname] = useState("");
   const addUser = (user) => {
+    //console.log(user);
+    setCurrentUserName(user.name);
+    setCurrentUserSurname(user.surname);
     updateUsers([...users, user]);
   };
   return (
     <div className="App">
       <Form addUser={addUser} />
-      <List users={users} />
+      <List
+        users={users}
+        currentUserName={currentUserName}
+        currentUserSurname={currentUserSurname}
+      />
     </div>
   );
 }
